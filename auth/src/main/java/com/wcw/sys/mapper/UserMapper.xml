@@ -16,11 +16,28 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
         <result column="remark" property="remark" />
+        <result column="roleKey" property="roleKey" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         user_id, login_name, user_name, sex, avatar, password, status, deleted, login_ip, create_time, update_time, remark
     </sql>
+
+    <select id="getUserInfo" resultType="com.wcw.sys.model.po.User">
+        SELECT u.`user_id`, u.`login_name`, u.`login_name`, u.`sex`, u.`avatar`, u.`password`, u.`status`, u.`login_ip`, u.`create_time`, u.`update_time`, u.`remark`, r.`role_name`, r.`role_key`, r.`role_name`, u.`deleted`
+        FROM `user` u
+        LEFT JOIN user_role ur ON u.user_id = ur.`user_id`
+        LEFT JOIN `role` r ON ur.`user_id` = r.`role_id`
+        WHERE u.`deleted`=0 AND u.`login_name` = #{loginName} AND u.`password`=#{password}
+    </select>
+
+    <select id="adminLogin" resultType="com.wcw.sys.model.po.User">
+        SELECT u.`user_id`, u.`login_name`, u.`login_name`, u.`sex`, u.`avatar`, u.`password`, u.`status`, u.`login_ip`, u.`create_time`, u.`update_time`, u.`remark`, r.`role_name`, r.`role_key`, r.`role_name`, u.`deleted`
+        FROM `user` u
+        LEFT JOIN user_role ur ON u.user_id = ur.`user_id`
+        LEFT JOIN `role` r ON ur.`user_id` = r.`role_id`
+        WHERE u.`deleted`=0 AND r.`role_key`!='common' AND u.`login_name` = #{loginName} AND u.`password`=#{password}
+    </select>
 
 </mapper>

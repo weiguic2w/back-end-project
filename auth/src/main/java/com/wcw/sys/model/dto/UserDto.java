@@ -57,7 +57,7 @@ public class UserDto implements Serializable {
     private Integer deleted;
 
     /**
-     * 最狗登录ip
+     * 最后登录ip
      */
     private String loginIp;
 
@@ -78,5 +78,7 @@ public class UserDto implements Serializable {
      */
     private String remark;
 
+    private String roleKey;
 
+    private String roleName;
 }
