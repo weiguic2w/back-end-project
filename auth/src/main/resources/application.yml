@@ -34,14 +34,3 @@ sa-token:
   token-style: uuid
   # 是否输出操作日志
   is-log: false
-
-aliyun:
-  oss:
-    endpoint: oss-cn-hangzhou.aliyuncs.com
-    keyId: LTAI5t628voexyyx3AMgC6JT
-    keySecret: 97VN2Hqsv5kN84bAkxl9GJfjxc2ANi
-    bucketName: 230119blog
-
-  vod:
-    keyid: LTAI5t628voexyyx3AMgC6JT
-    keysecret: 97VN2Hqsv5kN84bAkxl9GJfjxc2ANi
