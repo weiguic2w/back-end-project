@@ -1,14 +1,10 @@
 package com.wcw.sys.controller;
 
-import cn.dev33.satoken.stp.StpUtil;
 import com.wcw.course.result.R;
 import com.wcw.course.utl.Assert;
-import com.wcw.sys.model.po.UserDto;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.wcw.sys.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
