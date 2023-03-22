@@ -12,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Map;
+
 /**
  * <p>
  * 用户表 前端控制器
@@ -37,7 +39,7 @@ public class UserController {
     }
 
     public R getAdminInfo() {
-        UserDto userDto = userService.getAdminInfo();
-        return R.ok().data("info", userDto);
+        final Map userMap = userService.getAdminInfo();
+        return R.ok().data("adminInfo",  userMap);
     }
 }

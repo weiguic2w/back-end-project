@@ -4,6 +4,8 @@ import com.wcw.sys.model.po.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wcw.sys.model.po.UserDto;
 
+import java.util.Map;
+
 /**
  * <p>
  * 用户表 服务类
@@ -16,5 +18,5 @@ public interface UserService extends IService<User> {
 
     String adminLogin(String loginName, String password);
 
-    UserDto getAdminInfo();
+    Map getAdminInfo();
 }

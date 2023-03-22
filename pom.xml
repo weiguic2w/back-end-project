@@ -38,10 +38,17 @@
         <elasticsearch.version>7.12.1</elasticsearch.version>
         <hutool.version>5.7.17</hutool.version>
         <satoken.version>1.34.0</satoken.version>
+        <redis.version>2.3.7.RELEASE</redis.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${redis.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>

@@ -2,11 +2,17 @@ package com.wcw.sys;
 
 
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.wcw.sys.mapper.UserMapper;
+import com.wcw.sys.model.po.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ChuangWeiwei;
@@ -27,7 +33,12 @@ public class UserTest {
     public void t2() {
         //User admin userMapper.adminLogin("admin", "7c4a8d09ca3762af61e59520943dc26494f8941b");
         //System.out.println(admin);
-
-        System.out.println(StpUtil.getTokenName());
+        User user = new User();
+        user.setUserId(1L);
+        Map<String, Object> userMap = BeanUtil.beanToMap(user, new HashMap<>(),
+                CopyOptions.create()
+                        .setIgnoreNullValue(true)
+                        .setFieldValueEditor((fieldName, fieldValue) -> fieldValue.toString()));    // Long类型转为String
+        System.out.println(userMap);
     }
 }

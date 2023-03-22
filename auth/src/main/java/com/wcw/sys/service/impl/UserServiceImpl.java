@@ -2,6 +2,7 @@ package com.wcw.sys.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wcw.course.utl.Assert;
 import com.wcw.sys.model.po.User;
@@ -13,11 +14,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.core.util.UuidUtil;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import sun.security.provider.SHA;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -30,6 +34,8 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+    @Autowired
+    StringRedisTemplate redisTemplate;
 
     @Override
     public String adminLogin(String loginName, String password) {
@@ -40,19 +46,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         //  sa-token 管理登录用户
         StpUtil.login(admin.getUserId());
-        // TODO 继承redis存储用户信息
-        final UserDto userDto = BeanUtil.copyProperties(admin, UserDto.class);
-        userDto.setPassword(null);
 
-        System.out.println(admin);
-        return StpUtil.getTokenValueByLoginId(admin.getUserId());
+        // redis< token, map<user> >
+        UserDto user = BeanUtil.copyProperties(admin, UserDto.class);
+        user.setPassword(null);
+        String token = StpUtil.getTokenValue();
+        Map<String, Object> userMap = BeanUtil.beanToMap(user, new HashMap<>(),
+                CopyOptions.create()
+                        .setIgnoreNullValue(true)
+                        .setFieldValueEditor((fieldName, fieldValue) -> fieldValue.toString()));
+        redisTemplate.opsForHash().putAll(token, userMap);
+        return token;
     }
 
     @Override
-    public UserDto getAdminInfo() {
+    public Map getAdminInfo() {
         final String token = StpUtil.getTokenValue();
-    //    TODO 从redis中获取用户数据
-        return null;
+        //    TODO 从redis中获取用户数据
+        Map<Object, Object> userMap = redisTemplate.opsForHash().entries(token);
+        //UserDto userDto = BeanUtil.fillBeanWithMap(userMap, new UserDto(), false);
+        return userMap;
     }
 
 
