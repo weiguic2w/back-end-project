@@ -1,5 +1,7 @@
 package com.wcw.course.result;
 
+import lombok.Data;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +9,7 @@ import java.util.Map;
  * @author ChuangWeiwei;
  * @create 2023.03.22;
  */
+@Data
 public class R {
     private Integer code;
     private String message;
@@ -39,7 +42,7 @@ public class R {
     }
 
     public static R fetchR(ResultEnum resultEnum) {
-        return new R(resultEnum.getCode(), resultEnum.getMessage(), null);
+        return new R(resultEnum.getCode(), resultEnum.getMessage(), new HashMap<>());
     }
 
     public static R ok() {

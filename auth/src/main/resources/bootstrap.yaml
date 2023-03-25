@@ -1,0 +1,14 @@
+server:
+  port: 10000 # 服务端口
+
+spring:
+#  profiles:
+#    active: dev # 环境设置
+  application:
+    name: auth
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+      discovery:
+        server-addr: localhost:8848

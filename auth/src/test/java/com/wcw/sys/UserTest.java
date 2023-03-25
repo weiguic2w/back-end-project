@@ -35,10 +35,18 @@ public class UserTest {
         //System.out.println(admin);
         User user = new User();
         user.setUserId(1L);
-        Map<String, Object> userMap = BeanUtil.beanToMap(user, new HashMap<>(),
+        //Map<String, Object> userMap = BeanUtil.beanToMap(user, new HashMap<>(),
+        //        CopyOptions.create()
+        //                .ignoreError()
+        //                .ignoreNullValue()
+        //                .setFieldValueEditor((fieldName, fieldValue) -> fieldValue.toString()));    // Long类型转为String
+
+        Map<String, Object> userMap2 = BeanUtil.beanToMap(user, new HashMap<>(),
                 CopyOptions.create()
-                        .setIgnoreNullValue(true)
-                        .setFieldValueEditor((fieldName, fieldValue) -> fieldValue.toString()));    // Long类型转为String
-        System.out.println(userMap);
+                        .ignoreNullValue()
+                        .setFieldValueEditor((fieldName, fieldValue) -> {
+                            return fieldValue != null ? fieldValue.toString() : null;
+                }));
+        System.out.println(userMap2);
     }
 }

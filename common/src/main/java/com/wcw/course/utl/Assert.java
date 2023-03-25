@@ -3,11 +3,8 @@ package com.wcw.course.utl;
 import com.wcw.course.exception.GlobalException;
 import com.wcw.course.result.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
-import java.util.Collection;
 
 /**
  * @author ChuangWeiwei;
@@ -22,7 +19,7 @@ public abstract class Assert {
      * @param obj 待判断对象
      */
     public static void notEmpty(Object obj, ResultEnum resultEnum) {
-        if (obj == null) {
+        if (ObjectUtils.isEmpty(obj)) {
             log.info("obj is null...............");
             throw new GlobalException(resultEnum);
         }

@@ -18,5 +18,7 @@ public interface UserService extends IService<User> {
 
     String adminLogin(String loginName, String password);
 
-    Map getAdminInfo();
+    Map getAdminInfo(String token);
+
+    void adminLogout();
 }
